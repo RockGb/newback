@@ -5,7 +5,7 @@ const path = require('path');
 const fs = require('fs');
 
 const app = express();
-const PORT = 8080;
+const PORT = process.env.PORT || 8080; // Use environment variable for port
 
 // Middleware
 app.use(cors());
@@ -45,7 +45,8 @@ app.post('/upload', (req, res) => {
       return res.status(500).json({ error: 'Failed to save image.' });
     }
 
-    const link = `http://localhost:${PORT}/uploads/${randomFilename}.png`;
+    // Use Render domain for the link
+    const link = `https://newback-h9lo.onrender.com/uploads/${randomFilename}.png`;
     res.json({ link });
   });
 });
@@ -58,5 +59,5 @@ app.use((err, req, res, next) => {
 
 // Start the server
 app.listen(PORT, () => {
-  console.log(`Backend is running on http://localhost:${PORT}`);
+  console.log(`Backend is running on https://newback-h9lo.onrender.com`);
 });
