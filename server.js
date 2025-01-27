@@ -39,6 +39,12 @@ app.post('/upload', (req, res) => {
   const buffer = Buffer.from(base64Data, 'base64');
   const filePath = path.join(__dirname, 'uploads', `${randomFilename}.png`);
 
+  // Ensure the uploads directory exists
+  if (!fs.existsSync(path.join(__dirname, 'uploads'))) {
+    fs.mkdirSync(path.join(__dirname, 'uploads'));
+  }
+
+  // Save the image to the uploads folder
   fs.writeFile(filePath, buffer, (err) => {
     if (err) {
       console.error('Error saving image:', err);
