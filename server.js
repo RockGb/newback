@@ -60,7 +60,7 @@ app.post('/upload', (req, res) => {
 // Serve the preview page with Open Graph meta tags
 app.get('/preview/:filename', (req, res) => {
   const { filename } = req.params;
-  const imageUrl = `https://newback-h9lo.onrender.com/uploads/${filename}`;
+  const imageUrl = `https://newback-h9lo.onrender.com/uploads/${randomFilename}`;
 
   // HTML with Open Graph meta tags
   const html = `
@@ -70,7 +70,7 @@ app.get('/preview/:filename', (req, res) => {
         <meta property="og:title" content="Look what I shared with you!" />
         <meta property="og:description" content="Check out this awesome image I created!" />
         <meta property="og:image" content="${imageUrl}" />
-        <meta property="og:url" content="https://newback-h9lo.onrender.com/preview/${filename}" />
+        <meta property="og:url" content="https://newback-h9lo.onrender.com/preview/${randomFilename}" />
         <meta property="og:type" content="website" />
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:title" content="Look what I shared with you!" />
