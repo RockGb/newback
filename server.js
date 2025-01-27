@@ -45,10 +45,39 @@ app.post('/upload', (req, res) => {
       return res.status(500).json({ error: 'Failed to save image.' });
     }
 
-    // Use Render domain for the link
-    const link = `https://newback-h9lo.onrender.com/uploads/${randomFilename}.png`;
-    res.json({ link });
+    // Return the preview link instead of the direct image link
+    const previewLink = `https://newback-h9lo.onrender.com/preview/${randomFilename}.png`;
+    res.json({ link: previewLink });
   });
+});
+
+// Serve the preview page with Open Graph meta tags
+app.get('/preview/:filename', (req, res) => {
+  const { filename } = req.params;
+  const imageUrl = `https://newback-h9lo.onrender.com/uploads/${filename}`;
+
+  // HTML with Open Graph meta tags
+  const html = `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta property="og:title" content="Look what I shared with you!" />
+        <meta property="og:description" content="Check out this awesome image I created!" />
+        <meta property="og:image" content="${imageUrl}" />
+        <meta property="og:url" content="https://newback-h9lo.onrender.com/preview/${filename}" />
+        <meta property="og:type" content="website" />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:title" content="Look what I shared with you!" />
+        <meta property="twitter:description" content="Check out this awesome image I created!" />
+        <meta property="twitter:image" content="${imageUrl}" />
+      </head>
+      <body>
+        <img src="${imageUrl}" alt="Shared Image" style="max-width: 100%; height: auto;" />
+      </body>
+    </html>
+  `;
+
+  res.send(html);
 });
 
 // Error handling
